@@ -57,26 +57,36 @@ systemd service (enabled on boot), the GUI launcher, and the desktop entry.
 
 ## Status
 
-Implemented so far (implementation steps 1-4 of the plan):
+Implemented feature set:
 
-- Daemon with `get_status` (read-only MSR snapshot), `set_turbo_ratio`
-  (per 1-2/3-4/5-6 core group), `set_power_limit` (PL1/PL2 watts), and
-  `reset_stock` (restore persisted stock registers).
+- Daemon with `get_status` (read-only MSR snapshot including live power draw),
+  `set_turbo_ratio` (per 1-2/3-4/5-6 core group), `set_power_limit`
+  (PL1/PL2 watts), `reset_stock` (restore persisted stock registers), and
+  named-profile management (`save_profile` / `list_profiles` / `load_profile` /
+  `delete_profile`).
 - Safety validation before every write: turbo ratios against a configurable
   ceiling and the CPU's max multiplier (MSR_PLATFORM_INFO), plus a
   non-increasing-with-core-count rule; power limits against a plausible range
   derived from rated TDP. Every write is read back (`write_verified`) and
   reported as a failure to the GUI otherwise.
 - Unix-socket JSON protocol, verified end-to-end by `tests/test_daemon.py`.
-- GUI with a **Status** tab and an **Advanced Tuning** tab: per-group turbo
-  sliders/spinboxes, PL1/PL2 watts, "Apply" and "Apply and Save as Boot
-  Default" buttons, a "Reset to Stock" button, stock-vs-current labels, and a
-  persistent warning banner when a non-stock profile is active. Verified
-  headlessly by `tests/test_gui.py`.
-- Daemon re-applies the last saved active profile on boot (`save_active` /
-  `load_active`).
+- GUI tabs, verified headlessly by `tests/test_gui.py`:
+  - **Status**: on-demand live readout.
+  - **Advanced Tuning**: per-group turbo sliders/spinboxes, PL1/PL2 watts,
+    "Apply" and "Apply and Save as Boot Default", "Reset to Stock",
+    stock-vs-current labels, and a warning banner when a non-stock profile is
+    active.
+  - **Profiles**: save/apply/delete named profiles plus a fixed stock
+    emergency reset.
+  - **Monitoring**: live graphs of clock speed, package temperature and power
+    draw, polled only while the tab is visible.
+  - **About & Safety**: full disclaimer and a first-launch safety
+    acknowledgment that gates the tuning tools.
+- Daemon re-applies the last saved active profile on boot.
 
-Next steps: full profile manager tab, and live monitoring graphs.
+## License
+
+BSD 3-Clause. See [LICENSE](LICENSE).
 
 ## Safety
 
