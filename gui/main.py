@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """XTU-Linux GUI entry point.
 
 Tabs: Status (live readout), Advanced Tuning, Profiles (named tuning

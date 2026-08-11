@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 """xtu-linuxd — privileged daemon providing MSR access over a Unix socket.
 
 Runs as root via systemd. Exposes /run/xtu-linux.sock restricted to the
