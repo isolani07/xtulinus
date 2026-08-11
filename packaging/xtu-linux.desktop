@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Application
+Name=XTU-Linux
+GenericName=Intel CPU Overclocking Utility
+Comment=Overclocking and tuning for Intel CPUs on Linux (XTU inspired)
+Exec=/usr/local/bin/xtu-linux
+Icon=xtu-linux
+Terminal=false
+Categories=System;HardwareSettings;Settings;
+Keywords=cpu;overclock;tune;msr;intel;
+StartupNotify=true

@@ -1,0 +1,28 @@
+[Unit]
+Description=XTU-Linux privileged MSR daemon
+Documentation=file:///usr/share/doc/xtu-linux/README.md
+After=local-fs.target
+Wants=local-fs.target
+
+[Service]
+Type=simple
+ExecStartPre=/sbin/modprobe msr
+ExecStart=/usr/local/lib/xtu-linux/daemon/xtu_linuxd.py
+Restart=on-failure
+RestartSec=3
+# Run with elevated privileges; the GUI talks over the group-restricted socket.
+User=root
+Group=root
+# Minimal hardening (MSR/state/log/socket only).
+ProtectSystem=full
+ProtectHome=true
+PrivateTmp=true
+ProtectKernelTunables=true
+ProtectControlGroups=true
+RestrictRealtime=true
+AmbientCapabilities=
+CapabilityBoundingSet=
+NoNewPrivileges=false
+
+[Install]
+WantedBy=multi-user.target

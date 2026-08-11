@@ -1,0 +1,6 @@
+{
+  "safe_turbo_ceiling": 47,
+  "min_pl_watts": 1,
+  "max_pl_watts": 300,
+  "max_pl_ratio_of_tdp": 2.0
+}
